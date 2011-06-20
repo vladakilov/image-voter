@@ -1,3 +1,70 @@
+<script>
+function submit_login_form() {
+  $.ajax({
+    type: "POST",
+    url: "index.php/ajax/login",
+    data: {
+	    'login': 'true',
+      'username': $("#username_login").val(),
+      'password': $("#password_login").val()
+    },
+    success: function (msg) {
+      alert(msg);
+    }
+  });
+}
+
+function submit_form() {
+  $.ajax({
+    type: "POST",
+    url: "index.php/ajax/register",
+    data: {
+	    'register': 'true',
+      'username': $("#username").val(),
+      'email': $("#email").val(),
+      'password': $("#password").val(),
+      'password2': $("#password2").val()
+    },
+    success: function (msg) {
+      alert(msg);
+    }
+  });
+}
+
+function validate_form() {
+  var email = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
+  if ($('#username').val() == '') {
+    alert('Please insert your username!');
+    return false;
+  }
+  if (!$('#email').val().match(email)) {
+    alert('Please insert a valid email!');
+    return false;
+  }
+  if ($('#password').val() == '') {
+    alert('Please insert your password!');
+    return false;
+  }
+  if ($('#password').val() !== $('#password2').val()) {
+    alert('Your password does not match!');
+    return false;
+  }
+  submit_form();
+}
+
+function validate_login_form() {
+  if ($('#username_login').val() == '') {
+    alert('Please insert your username!');
+    return false;
+  }
+  if ($('#password_login').val() == '') {
+    alert('Please insert your password!');
+    return false;
+  }
+  submit_login_form();
+}
+</script>
+
 <a id="triggers" href="#" rel="#login"/>Login</a>
 <a id="triggers" href="#" rel="#register"/>Register</a>
 
@@ -65,10 +132,10 @@
 <table>
 	<?foreach ($documents as $document):?>
   <tr>
-    <td><a href="#" class="up" id="<?=$document['_id']?>">Up Vote</a><p class="count"></p></a></td>
+    <td><a href="#" class="up" id="<?=$document['_id']?>">Up Vote</a><p class="count"></p></td>
     <td><a href="#" class="down" id="<?=$document['_id']?>">Down Vote</a><p class="count"></p></td>
-    <td><img src="<?=base_url();?>/welcome/image/<?=$document['md5']?>"/></td>
-    <td><p><a href="/welcome/image/<?=$document['md5']?>">View Image</a></p></td>
+    <td><img src="index.php/main/image/<?=$document['md5']?>"/></td>
+    <td><p><a href="index.php/main/image/<?=$document['md5']?>">View Image</a></p></td>
     <td><p><a href="user/"></a></p></td>
     <td><p></p></td>
   </tr>

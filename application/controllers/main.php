@@ -24,7 +24,6 @@ class Main extends CI_Controller {
 		   $documents = $users->getNext();
 		   $data['documents'][] = array(
 			 '_id'      => $documents->file['_id'],
-		   'image_id' => $documents->file['image_id'],
 		   'likes'    => $documents->file['likes'],
 		   'md5'      => $documents->file['md5']
 		   );

@@ -2,3 +2,7 @@
 */system/logs/log-*.php
 */system/cache/*
 */system/cache/!index.html
+user_guide
+index.php
+license.txt
+
