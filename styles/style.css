@@ -1,0 +1,70 @@
+.simple_overlay
+{
+	/* must be initially hidden */
+	display:none;
+	/* place overlay on top of other elements */
+	z-index:10000;
+	/* styling */
+	background-color:#eee;
+	width:675px;	
+	min-height:200px;
+	border:1px solid #666;
+	/* CSS3 styling for latest browsers */
+	-moz-box-shadow:0 0 90px 5px #000;
+	-webkit-box-shadow: 0 0 90px #000;	
+}
+
+/* close button positioned on upper right corner */
+.simple_overlay .close
+{
+	background-image:url(../img/overlay/close.png);
+	position:absolute;
+	right:-15px;
+	top:-15px;
+	cursor:pointer;
+	height:35px;
+	width:35px;
+}
+
+/* Registration Popup Dialog */
+#register, #login
+{
+	width: 580px;
+	padding: 15px;
+}
+
+#user_register, #user_login
+{
+	background-image: -moz-linear-gradient(#E1E1E1, #BBBBBB);
+	padding: 10px 5px 10px 20px;
+	width: 250px;
+	float: left;
+	border: 1px solid #CCCCCC;
+	border-radius: 10px;
+}
+
+.social_box
+{
+	float: right;
+	background-color: #F3F3F3;
+	border: 1px solid #CCCCCC;
+    border-radius: 5px;
+	margin: 0 auto 20px;
+	padding: 16px;
+	width: 250px;
+}
+textarea{
+border: 1px solid gray;
+margin: 0;
+padding: 3px;
+width: 500px;}
+body {
+  font-family: 'Lucida Grande', Verdana, Arial, sans-serif;
+}
+h1 a {
+  text-decoration: none;
+  color: #3b5998;
+}
+h1 a:hover {
+  text-decoration: underline;
+}
