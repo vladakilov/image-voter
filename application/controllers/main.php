@@ -11,32 +11,40 @@ class Main extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->helper('url');
     $db = $this->mongo->images_test->getGridFS();
   	$users = $db->find();
     $data = array(
 		 'documents' => array()
 		 );
-		 // While we have results
-		 while($users->hasNext())
-		 {
-		   // Get the next result
-		   $documents = $users->getNext();
-		   $data['documents'][] = array(
-			 '_id'      => $documents->file['_id'],
-		   'likes'    => $documents->file['likes'],
-		   'md5'      => $documents->file['md5']
-		   );
-		 }
-		$output  = $this->load->view('main/header', $data, true);
-		$output .= $this->load->view('main/content', $data, true);
 		
-		$this->output->set_output($output);
+		 // While we have results
+		while($users->hasNext())
+		{
+		  // Get the next result
+		  $documents = $users->getNext();
+		  $data['documents'][] = array(
+			'_id'      => $documents->file['_id'],
+		  'likes'    => $documents->file['likes'],
+		  'md5'      => $documents->file['md5']
+		  );
+		}
+		
+		$logged_in = $this->session->userdata('logged_in');
+		if ($logged_in)
+		{
+      $this->load->view('main/header');
+			$this->load->view('main/content', $data);
+		}
+		else
+		{
+		  $this->load->view('main/header');
+		  $this->load->view('main/form');
+		  $this->load->view('main/content', $data);
+	  }
 	}
 
 	public function image($id)
 	{
-		$this->load->helper('url');
     $db = $this->mongo->images_test->getGridFS();
   	$image = $db->findOne(array('md5' => $id));
     $photo = array('photo' => $image);
@@ -50,7 +58,8 @@ class Main extends CI_Controller {
 	
 	public function logout()
 	{
-    //Logout functionality goes here
+    $this->session->sess_destroy(); // Destroy session
+    redirect('/', 'refresh');
 	}
 	
 }

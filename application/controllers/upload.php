@@ -12,18 +12,30 @@ class Upload extends CI_Controller {
 	public function index()
 	{
 		$this->load->helper('form');
-		$this->load->view('upload/asset');
+		$logged_in = $this->session->userdata('logged_in');
+		if ($logged_in)
+		{
+			$data = array('username' => $this->session->userdata('username'));
+      $this->load->view('upload/asset', $data);
+		}
+		else
+		{
+			redirect('/', 'refresh');
+		}  
 	}
 	
 	public function do_upload()
-	{		
+	{
+		$username = $this->input->post('username');
+		$description = $this->input->post('description');		
+		
     if (is_uploaded_file($_FILES['file']['tmp_name']))
     {
 	    $grid = $this->mongo->images_test->getGridFS();
       $id = $grid->storeUpload('file');
       echo $id;
       $grid->update(array('_id' => $id), 
-                    array('$set' => array('submitted_by' => 'submitters name', 'description' => 'A brief description of the image',
+                    array('$set' => array('submitted_by' => $username, 'description' => $description,
                     'tags' => array(), 'likes' => array('up_votes' => '', 'down_votes' => ''))));
     }
 	}
