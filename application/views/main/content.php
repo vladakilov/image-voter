@@ -1,21 +1,22 @@
 <script>
-$(document).ready(function(){
+$(document).ready(function () {
   // Make a vote
-  $(".up, .down").click(function(){
+  $(".up, .down").click(function () {
     var vote_type = $(this).attr('class');
-    var _id  = $(this).attr('id');
+    var _id = $(this).attr('id');
     submitVote(vote_type, _id);
   });
 
-  function submitVote(vote_type, _id){
+  function submitVote(vote_type, _id) {
     $.ajax({
       type: "POST",
       url: "index.php/ajax/vote",
       async: true,
-      data: {'_id' : _id,
-			       'vote_type': vote_type
+      data: {
+        '_id': _id,
+        'vote_type': vote_type
       },
-      success: function(msg){
+      success: function (msg) {
         //alert( "Data Saved: " + msg );
       }
     });

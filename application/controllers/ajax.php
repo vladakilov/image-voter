@@ -69,10 +69,11 @@ class Ajax extends CI_Controller {
 			$_id = $this->input->post('_id');
 			$vote_type = $this->input->post('vote_type');
 			$username = $this->session->userdata('username');
-			
 			$gridfs = $this->mongo->images_test->getGridFS();
+			//$already_voted = $gridfs->findOne(array('_id' => new MongoId($_id), array('likes.down_votes' => $username)));
+			//var_dump($already_voted);
 			$gridfs->update(array('_id' => new MongoId($_id)), 
-				array('$push' => array($vote_type . '_votes' => $username)));
+				array('$push' => array('likes.' . $vote_type . '_votes' => $username)));
 		}
 		else
 		{
