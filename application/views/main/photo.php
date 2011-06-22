@@ -1,5 +1,5 @@
 <?
 // Stream image to browser
-header('Content-type: image/jpeg');
+header('Content-type: image/jpg');
 echo $photo->getBytes();
 ?>

@@ -20,7 +20,7 @@ class User extends CI_Controller {
     }
     else
     {
-      //Load 404 error
+      echo 'Load 404 error';
     }
 	}
 	

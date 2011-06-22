@@ -27,17 +27,19 @@ class Upload extends CI_Controller {
 	public function do_upload()
 	{
 		$username = $this->input->post('username');
-		$description = $this->input->post('description');		
+		$description = $this->input->post('description');
+		$tags = $this->input->post('tags');		
+		
 		
     if (is_uploaded_file($_FILES['file']['tmp_name']))
     {
 	    $grid = $this->mongo->images_test->getGridFS();
       $id = $grid->storeUpload('file');
-      echo $id;
       $grid->update(array('_id' => $id), 
                     array('$set' => array('submitted_by' => $username, 'description' => $description,
-                    'tags' => array(), 'likes' => array('up_votes' => '', 'down_votes' => ''))));
+                    'tags' => array($tags))));
     }
+    //redirect to user page to show recently uploaded image.
 	}
 	
 }

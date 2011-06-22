@@ -24,7 +24,6 @@ class Main extends CI_Controller {
 		  $documents = $users->getNext();
 		  $data['documents'][] = array(
 			'_id'      => $documents->file['_id'],
-		  'likes'    => $documents->file['likes'],
 		  'md5'      => $documents->file['md5']
 		  );
 		}
@@ -46,7 +45,7 @@ class Main extends CI_Controller {
 	public function image($id)
 	{
     $db = $this->mongo->images_test->getGridFS();
-  	$image = $db->findOne(array('md5' => $id));
+  	$image = $db->findOne(array('_id' => new MongoId($id)));
     $photo = array('photo' => $image);
 		$this->load->view('main/photo', $photo);
 	}

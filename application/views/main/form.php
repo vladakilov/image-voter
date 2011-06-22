@@ -4,7 +4,6 @@ function submit_login_form() {
     type: "POST",
     url: "index.php/ajax/login",
     data: {
-	    'login': 'true',
       'username': $("#username_login").val(),
       'password': $("#password_login").val()
     },
@@ -19,7 +18,6 @@ function submit_form() {
     type: "POST",
     url: "index.php/ajax/register",
     data: {
-	    'register': 'true',
       'username': $("#username").val(),
       'email': $("#email").val(),
       'password': $("#password").val(),
