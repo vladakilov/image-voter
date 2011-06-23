@@ -17,26 +17,45 @@ $(document).ready(function () {
         'vote_type': vote_type
       },
       success: function (msg) {
-        //alert( "Data Saved: " + msg );
+        if (msg == 'You must be logged in to vote') {
+          alert(msg);
+        }
       }
     });
   }
 });
 </script>
 
+<?if($logged_in):?>
+<div id="top_nav">
+  <p>Welcome <?=$username;?></p>
+  <a href="<?=base_url();?>main/logout">Logout</a>
+</div>
+<?endif;?>
 
-<a href="index.php/main/logout">Logout</a>
 <!-- The loop to show all assets -->
-<?=$this->session->userdata('logged_in');?>
 <table>
 	<?foreach ($documents as $document):?>
   <tr>
-    <td><a href="#" class="up" id="<?=$document['_id']?>">Up Vote</a><p class="count"></p></td>
-    <td><a href="#" class="down" id="<?=$document['_id']?>">Down Vote</a><p class="count"></p></td>
-    <td><img src="index.php/main/image/<?=$document['_id']?>"/></td>
-    <td><p><a href="index.php/main/image/<?=$document['_id']?>">View Image</a></p></td>
-    <td><p><a href="user/"></a></p></td>
-    <td><p></p></td>
+    <td>
+      <a href="#" class="up" id="<?=$document['_id']?>">Up Vote</a>
+      <p class="count"><?=$document['up_votes']?></p>
+    </td>
+    <td>
+      <a href="#" class="down" id="<?=$document['_id']?>">Down Vote</a><p class="count"><?=$document['down_votes']?></p>
+    </td>
+    <td>
+      <img src="<?=base_url();?>main/image/<?=$document['_id']?>"/>
+    </td>
+    <td>
+      <p><a href="<?=base_url();?>main/image/<?=$document['_id']?>">View Image</a></p>
+    </td>
+    <td>
+      <p><a href="<?=base_url();?>user/<?=$document['submitted_by']?>"><?=$document['submitted_by']?></a></p>
+    </td>
+    <td>
+      <p></p>
+    </td>
   </tr>
   <?endforeach;?>
 </table>

@@ -14,7 +14,9 @@ class Main extends CI_Controller {
     $db = $this->mongo->images_test->getGridFS();
   	$users = $db->find();
     $data = array(
-		 'documents' => array()
+		 'documents' => array(),
+		 'username' => $this->session->userdata('username'),
+		 'logged_in' => $this->session->userdata('logged_in')
 		 );
 		
 		 // While we have results
@@ -23,8 +25,10 @@ class Main extends CI_Controller {
 		  // Get the next result
 		  $documents = $users->getNext();
 		  $data['documents'][] = array(
-			'_id'      => $documents->file['_id'],
-		  'md5'      => $documents->file['md5']
+			'_id' => $documents->file['_id'],
+		  'up_votes' => count($documents->file['likes']['up_votes']),
+		  'down_votes' => count($documents->file['likes']['down_votes']),
+		  'submitted_by' => $documents->file['submitted_by']
 		  );
 		}
 		
@@ -58,7 +62,7 @@ class Main extends CI_Controller {
 	public function logout()
 	{
     $this->session->sess_destroy(); // Destroy session
-    redirect('/', 'refresh');
+    redirect(base_url(), 'refresh');
 	}
 	
 }

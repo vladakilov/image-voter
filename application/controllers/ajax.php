@@ -18,7 +18,7 @@ class Ajax extends CI_Controller {
 
 	public function login()
 	{
-		$username = $this->input->post('username');
+		$username = trim($this->input->post('username'));
 		$password = $this->input->post('password');    
 		$email = $this->input->post('email');    
 		    
@@ -34,13 +34,13 @@ class Ajax extends CI_Controller {
 				'logged_in' => TRUE
 				);
 			$this->session->set_userdata($session_data);
-			//redirect to home page
+	    redirect('/', 'refresh');
 		}
 	}
 	
 	public function register()
 	{
-		$username = $this->input->post('username');
+		$username = trim($this->input->post('username'));
 		$password = $this->input->post('password');
 		$email = $this->input->post('email');
 		
@@ -51,13 +51,12 @@ class Ajax extends CI_Controller {
 		}
 		else
 		{
-			$this->mongo->test_app->users->insert(array('username' => $username, 'password' => md5($password), 'email' => $email));
+			$this->mongo->test_app->users->insert(array('username' => trim($username), 'password' => md5($password), 'email' => $email));
 			$session_data = array(
 				'username'  => $username,
 				'logged_in' => TRUE
 				);
 			$this->session->set_userdata($session_data);
-			//redirect to home page
 		}
 	}
 

@@ -8,7 +8,13 @@ function submit_login_form() {
       'password': $("#password_login").val()
     },
     success: function (msg) {
-      alert(msg);
+      switch (msg) {
+      case 'Wrong username or password':
+        alert(msg);
+        break;
+      default:
+        window.location = "/CodeIgniter"
+      }
     }
   });
 }
@@ -24,7 +30,13 @@ function submit_form() {
       'password2': $("#password2").val()
     },
     success: function (msg) {
-      alert(msg);
+      switch (msg) {
+      case 'The username ' + $("#username").val() + ' is taken!':
+        alert(msg);
+        break;
+      default:
+        window.location = "/CodeIgniter"
+      }
     }
   });
 }

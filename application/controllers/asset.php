@@ -25,7 +25,7 @@ class Asset extends CI_Controller {
 	    'uploadDate' => $image->file['uploadDate']
 	
 		  );
-		$this->load->view('image/index', $data);
+		$this->load->view('asset/index', $data);
 	  }
     else
     {

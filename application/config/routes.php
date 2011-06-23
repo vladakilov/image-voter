@@ -41,6 +41,8 @@
 $route['default_controller'] = "main";
 $route['404_override'] = '';
 $route['user/(:any)'] = "user/index/$1";
+$route['asset/(:any)'] = "asset/index/$1";
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

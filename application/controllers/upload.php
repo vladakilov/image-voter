@@ -37,7 +37,7 @@ class Upload extends CI_Controller {
       $id = $grid->storeUpload('file');
       $grid->update(array('_id' => $id), 
                     array('$set' => array('submitted_by' => $username, 'description' => $description,
-                    'tags' => array($tags))));
+                    'tags' => array($tags), 'likes' => array('up_votes' => array(), 'down_votes' => array()))));
     }
     //redirect to user page to show recently uploaded image.
 	}

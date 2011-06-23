@@ -8,7 +8,7 @@ img{max-width: 500px; max-height: 500px;}
 <div id="wrapper">
   <div id="image_content">
     <p></p>
-    <img src="../image.php?name=">
+    <img src="<?=base_url()?>main/image/<?=$_id?>">
   </div>
   <div id="comments">
     <h2><p>Comments</p></h2>
