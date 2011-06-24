@@ -38,6 +38,9 @@ class Upload extends CI_Controller {
       $grid->update(array('_id' => $id), 
                     array('$set' => array('submitted_by' => $username, 'description' => $description,
                     'tags' => array($tags), 'likes' => array('up_votes' => array(), 'down_votes' => array()))));
+      
+      $this->mongo->test_app->users->update(array('username' => $username),
+                                            array('$push' => array('images_uploaded' => $id)));
     }
     //redirect to user page to show recently uploaded image.
 	}

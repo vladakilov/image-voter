@@ -8,14 +8,14 @@ img{max-width: 500px; max-height: 500px;}
 <div id="wrapper">
   <div id="image_content">
     <p></p>
-    <img src="<?=base_url()?>main/image/<?=$_id?>">
+    <img src="<?=base_url()?>main/image/">
   </div>
   <div id="comments">
     <h2><p>Comments</p></h2>
   </div>
   <div id="sidebar">
     <div class="single_content_submitted_by">
-      <p>Submitted by: <?=$user->file['submitted_by'];?></p>
+      <p>Submitted by: </p>
     </div>
     <div class="single_content_tags">
       <p>Filed Under:</p>

@@ -1,6 +1,6 @@
 <?php
 $hidden = array('username' => $username);
-echo form_open_multipart(base_url().'_upload/do_upload', '', $hidden);
+echo form_open_multipart('upload/do_upload', '', $hidden);
 echo form_label('Description for image:', 'description');
 echo form_input(array('name' => 'description', 'id' => 'description'));
 echo form_input(array('name' => 'tags', 'id' => 'tags'));

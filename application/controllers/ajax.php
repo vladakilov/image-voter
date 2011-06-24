@@ -73,6 +73,9 @@ class Ajax extends CI_Controller {
 			//var_dump($already_voted);
 			$gridfs->update(array('_id' => new MongoId($_id)), 
 				array('$push' => array('likes.' . $vote_type . '_votes' => $username)));
+				
+      $this->mongo->test_app->users->update(array('username' => $username),
+                                            array('$push' => array('image_votes' => $vote_type.'_'.$_id)));				
 		}
 		else
 		{

@@ -38,14 +38,15 @@ $(document).ready(function () {
 	<?foreach ($documents as $document):?>
   <tr>
     <td>
-      <a href="#" class="up" id="<?=$document['_id']?>">Up Vote</a>
+      <a href="javascript:;" class="up" id="<?=$document['_id']?>">Up Vote</a>
       <p class="count"><?=$document['up_votes']?></p>
     </td>
     <td>
-      <a href="#" class="down" id="<?=$document['_id']?>">Down Vote</a><p class="count"><?=$document['down_votes']?></p>
+      <a href="javascript:;" class="down" id="<?=$document['_id']?>">Down Vote</a>
+      <p class="count"><?=$document['down_votes']?></p>
     </td>
     <td>
-      <img src="<?=base_url();?>main/image/<?=$document['_id']?>"/>
+      <img src="<?=base_url();?>main/image/<?=$document['_id']?>" width="150" height="150"/>
     </td>
     <td>
       <p><a href="<?=base_url();?>main/image/<?=$document['_id']?>">View Image</a></p>
