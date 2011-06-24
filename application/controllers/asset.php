@@ -23,7 +23,6 @@ class Asset extends CI_Controller {
 	    'description' => $image->file['description'],
 	    'tags' => $image->file['tags'],
 	    'uploadDate' => $image->file['uploadDate']
-	
 		  );
 		$this->load->view('asset/index', $data);
 	  }
