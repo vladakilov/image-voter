@@ -5,13 +5,20 @@
 #sidebar{float:right;}
 img{max-width: 500px; max-height: 500px;}
 </style>
+<pre>
+	<?//var_dump($user_data['user'])?>
+	</pre>
 <div id="wrapper">
   <div id="image_content">
-    <p></p>
-    <img src="<?=base_url()?>main/image/">
+	Images uploaded by user:
+    <?foreach ($user_data['user']['images_uploaded'] as $image):?>
+      <a href="<?=base_url()?>main/image/<?=$image?>">Link</a>
+		<?endforeach;?>
   </div>
   <div id="comments">
-    <h2><p>Comments</p></h2>
+	<?foreach($user_data['user']['image_votes'] as $vote):?>
+    <?=$vote.'</br>';?>
+<?endforeach?>
   </div>
   <div id="sidebar">
     <div class="single_content_submitted_by">

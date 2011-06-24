@@ -55,7 +55,7 @@ $(document).ready(function () {
       <p><a href="<?=base_url();?>user/<?=$document['submitted_by']?>"><?=$document['submitted_by']?></a></p>
     </td>
     <td>
-      <p></p>
+      <p><?=$document['tags'][0]?></p>
     </td>
   </tr>
   <?endforeach;?>

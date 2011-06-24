@@ -28,6 +28,7 @@ class Main extends CI_Controller {
 			'_id' => $documents->file['_id'],
 		  'up_votes' => count($documents->file['likes']['up_votes']),
 		  'down_votes' => count($documents->file['likes']['down_votes']),
+		  'tags' => $documents->file['tags'],
 		  'submitted_by' => $documents->file['submitted_by']
 		  );
 		}

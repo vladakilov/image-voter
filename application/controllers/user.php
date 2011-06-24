@@ -12,10 +12,13 @@ class User extends CI_Controller {
 	public function index($username)
 	{
     $db = $this->mongo->images_test->getGridFS();
-  	$user = $db->findOne(array('submitted_by' => $username));
+  	$image = $db->findOne(array('submitted_by' => $username));
+    $user = $this->mongo->test_app->users->findOne(array('username' => $username));
     if ($user)
     {
-      $data = array('user' => $user);
+      $data['image_data'] = array('image' => $image);
+      $data['user_data'] = array('user' => $user);
+
 			$this->load->view('user/main', $data);
     }
     else
