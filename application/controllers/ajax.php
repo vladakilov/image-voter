@@ -51,7 +51,13 @@ class Ajax extends CI_Controller {
 		}
 		else
 		{
-			$this->mongo->test_app->users->insert(array('username' => trim($username), 'password' => md5($password), 'email' => $email));
+			$this->mongo->test_app->users->insert(array('username' => trim($username), 
+				'password' => md5($password),
+				'email' => $email,
+				'image_votes' => array(),
+				'images_uploaded' => array(), 
+				'created' => new MongoDate()
+				));
 			$session_data = array(
 				'username'  => $username,
 				'logged_in' => TRUE
@@ -68,14 +74,15 @@ class Ajax extends CI_Controller {
 			$_id = $this->input->post('_id');
 			$vote_type = $this->input->post('vote_type');
 			$username = $this->session->userdata('username');
+			
 			$gridfs = $this->mongo->images_test->getGridFS();
-			//$already_voted = $gridfs->findOne(array('_id' => new MongoId($_id), array('likes.down_votes' => $username)));
-			//var_dump($already_voted);
 			$gridfs->update(array('_id' => new MongoId($_id)), 
 				array('$push' => array('likes.' . $vote_type . '_votes' => $username)));
 				
       $this->mongo->test_app->users->update(array('username' => $username),
-                                            array('$push' => array('image_votes' => $vote_type.'_'.$_id)));				
+				array('$push' => array('image_votes' => $vote_type.'_'.$_id),
+				'date_modified' => new MongoDate()
+				));				
 		}
 		else
 		{
