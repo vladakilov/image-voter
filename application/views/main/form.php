@@ -2,7 +2,7 @@
 function submit_login_form() {
   $.ajax({
     type: "POST",
-    url: "index.php/ajax/login",
+    url: "ajax/login",
     data: {
       'username': $("#username_login").val(),
       'password': $("#password_login").val()
@@ -13,16 +13,16 @@ function submit_login_form() {
         alert(msg);
         break;
       default:
-        window.location = "/CodeIgniter"
+        refresh_page();
       }
     }
   });
 }
 
-function submit_form() {
+function submit_register_form() {
   $.ajax({
     type: "POST",
-    url: "index.php/ajax/register",
+    url: "ajax/register",
     data: {
       'username': $("#username").val(),
       'email': $("#email").val(),
@@ -35,13 +35,13 @@ function submit_form() {
         alert(msg);
         break;
       default:
-        window.location = "/CodeIgniter"
+        refresh_page();
       }
     }
   });
 }
 
-function validate_form() {
+function validate_register_form() {
   var email = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
   if ($('#username').val() == '') {
     alert('Please insert your username!');
@@ -59,7 +59,7 @@ function validate_form() {
     alert('Your password does not match!');
     return false;
   }
-  submit_form();
+  submit_register_form();
 }
 
 function validate_login_form() {
@@ -72,6 +72,17 @@ function validate_login_form() {
     return false;
   }
   submit_login_form();
+}
+
+function refresh_page()
+{
+	window.location.reload(true);
+}
+
+
+function logout()
+{
+	$.post("CodeIgniter/ajax/logout/",function(){refresh_page();});
 }
 </script>
 
@@ -99,7 +110,7 @@ function validate_login_form() {
         <input type="checkbox" id="updates" name="updates" value="yes" /> Send Me Updates</br>
       </p>
       <p>
-        <input type="button" value="Submit" id="submit_btn" alt="submit" name="submit" onClick="validate_form(); return false;">
+        <input type="button" value="Submit" id="submit_btn" alt="submit" name="submit" onClick="validate_register_form(); return false;">
       </p>
     </div>
   <div class="social_box">

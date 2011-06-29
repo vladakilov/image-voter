@@ -15,7 +15,7 @@
 |
 */
 //$config['base_url']	= '/CodeIgniter/index.php';
-$config['base_url']    = 'http://'.$_SERVER['HTTP_HOST'].'/CodeIgniter/index.php';  
+$config['base_url']    = 'http://'.$_SERVER['HTTP_HOST'].'/CodeIgniter/';  
 
 /*
 |--------------------------------------------------------------------------

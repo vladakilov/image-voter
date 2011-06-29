@@ -38,6 +38,12 @@ class Ajax extends CI_Controller {
 		}
 	}
 	
+	public function logout()
+	{
+		$this->session->sess_destroy(); // Destroy session
+		redirect('/', 'refresh');
+	}
+	
 	public function register()
 	{
 		$username = trim($this->input->post('username'));
@@ -54,7 +60,7 @@ class Ajax extends CI_Controller {
 			$this->mongo->test_app->users->insert(array('username' => trim($username), 
 				'password' => md5($password),
 				'email' => $email,
-				'image_votes' => array(),
+				//'image_votes' => array(),
 				'images_uploaded' => array(), 
 				'created' => new MongoDate()
 				));
@@ -74,20 +80,20 @@ class Ajax extends CI_Controller {
 			$_id = $this->input->post('_id');
 			$vote_type = $this->input->post('vote_type');
 			$username = $this->session->userdata('username');
-			
+
 			$gridfs = $this->mongo->images_test->getGridFS();
 			$gridfs->update(array('_id' => new MongoId($_id)), 
 				array('$push' => array('likes.' . $vote_type . '_votes' => $username)));
-				
-      $this->mongo->test_app->users->update(array('username' => $username),
+			
+			$this->mongo->test_app->users->update(array('username' => $username),
 				array('$push' => array('image_votes' => $vote_type.'_'.$_id),
 				'date_modified' => new MongoDate()
-				));				
+				));
 		}
 		else
 		{
 			echo 'You must be logged in to vote';
 		}
 	}
-
+		
 }

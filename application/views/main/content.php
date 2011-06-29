@@ -2,34 +2,34 @@
 $(document).ready(function () {
   // Make a vote
   $(".up, .down").click(function () {
-    var vote_type = $(this).attr('class');
-    var _id = $(this).attr('id');
-    submitVote(vote_type, _id);
+    submit_vote($(this).attr('class'), $(this).attr('id'), $(this));
   });
-
-  function submitVote(vote_type, _id) {
-    $.ajax({
-      type: "POST",
-      url: "index.php/ajax/vote",
-      async: true,
-      data: {
-        '_id': _id,
-        'vote_type': vote_type
-      },
-      success: function (msg) {
-        if (msg == 'You must be logged in to vote') {
-          alert(msg);
-        }
-      }
-    });
-  }
 });
+
+function submit_vote(vote_type, _id, current) {
+  $.ajax({
+    type: "POST",
+    url: "ajax/vote",
+    async: true,
+    data: {
+      '_id': _id,
+      'vote_type': vote_type
+    },
+    success: function (response) {
+      if (response == 'You must be logged in to vote') {
+        alert(response);
+      } else {
+        $(current).siblings().after('<p class="count">' + (parseInt(current.siblings().text()) + 1) + '</p>').remove();
+      }
+    }
+  });
+}
 </script>
 
 <?if($logged_in):?>
 <div id="top_nav">
   <p>Welcome <?=$username;?></p>
-  <a href="<?=base_url();?>main/logout">Logout</a>
+  <a href="ajax/logout">Logout</a>
 </div>
 <?endif;?>
 
@@ -46,7 +46,9 @@ $(document).ready(function () {
       <p class="count"><?=$document['down_votes']?></p>
     </td>
     <td>
-      <img src="<?=base_url();?>main/image/<?=$document['_id']?>" width="150" height="150"/>
+			<a href="<?=base_url();?>asset/<?=$document['_id']?>">
+				<img src="<?=base_url();?>main/image/<?=$document['_id']?>" width="150" height="150"/>
+			</a>
     </td>
     <td>
       <p><a href="<?=base_url();?>main/image/<?=$document['_id']?>">View Image</a></p>

@@ -16,9 +16,7 @@ img{max-width: 500px; max-height: 500px;}
 		<?endforeach;?>
   </div>
   <div id="comments">
-	<?foreach($user_data['user']['image_votes'] as $vote):?>
-    <?=$vote.'</br>';?>
-<?endforeach?>
+		<?var_dump($user_data['user']['images_uploaded'])?>
   </div>
   <div id="sidebar">
     <div class="single_content_submitted_by">
