@@ -16,10 +16,16 @@ function submit_vote(vote_type, _id, current) {
       'vote_type': vote_type
     },
     success: function (response) {
-      if (response == 'You must be logged in to vote') {
-        alert(response);
-      } else {
+      switch (response) {
+      case 'dupe':
+        alert('You already voted!');
+        break;
+      case 'login':
+        alert('You need to login to vote.');
+        break;
+      default:
         $(current).siblings().after('<p class="count">' + (parseInt(current.siblings().text()) + 1) + '</p>').remove();
+        $(current).remove();
       }
     }
   });
@@ -28,8 +34,7 @@ function submit_vote(vote_type, _id, current) {
 
 <?if($logged_in):?>
 <div id="top_nav">
-  <p>Welcome <?=$username;?></p>
-  <a href="ajax/logout">Logout</a>
+  <p style="float:right;">Welcome <a href="user/<?=$username?>"><?=$username?></a> | <a href="upload">Upload</a> | <a href="ajax/logout">Logout</a></p>
 </div>
 <?endif;?>
 
@@ -38,17 +43,25 @@ function submit_vote(vote_type, _id, current) {
 	<?foreach ($documents as $document):?>
   <tr>
     <td>
+      <?if($document['already_voted_up']):?>
+      <p class="count"><?=$document['up_votes']?></p>
+      <?else:?>
       <a href="javascript:;" class="up" id="<?=$document['_id']?>">Up Vote</a>
       <p class="count"><?=$document['up_votes']?></p>
+      <?endif;?>
     </td>
     <td>
+      <?if($document['already_voted_down']):?>
+      <p class="count"><?=$document['down_votes']?></p>
+      <?else:?>
       <a href="javascript:;" class="down" id="<?=$document['_id']?>">Down Vote</a>
       <p class="count"><?=$document['down_votes']?></p>
+      <?endif;?>
     </td>
     <td>
-			<a href="<?=base_url();?>asset/<?=$document['_id']?>">
-				<img src="<?=base_url();?>main/image/<?=$document['_id']?>" width="150" height="150"/>
-			</a>
+      <a href="<?=base_url();?>asset/<?=$document['_id']?>">
+        <img src="<?=base_url();?>main/image/<?=$document['_id']?>" width="150" height="150"/>
+      </a>
     </td>
     <td>
       <p><a href="<?=base_url();?>main/image/<?=$document['_id']?>">View Image</a></p>

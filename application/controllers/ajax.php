@@ -80,19 +80,29 @@ class Ajax extends CI_Controller {
 			$_id = $this->input->post('_id');
 			$vote_type = $this->input->post('vote_type');
 			$username = $this->session->userdata('username');
-
-			$gridfs = $this->mongo->images_test->getGridFS();
-			$gridfs->update(array('_id' => new MongoId($_id)), 
-				array('$push' => array('likes.' . $vote_type . '_votes' => $username)));
 			
-			$this->mongo->test_app->users->update(array('username' => $username),
-				array('$push' => array('image_votes' => $vote_type.'_'.$_id),
-				'date_modified' => new MongoDate()
-				));
+			$gridfs = $this->mongo->images_test->getGridFS();
+			
+			$entry_exists = $gridfs->findOne(array('_id' => new MongoId($_id),
+				'likes.' . $vote_type . '_votes' => $username)); 
+			//var_dump($entry_exists);
+			if(!$entry_exists)
+			{
+				$gridfs->update(array('_id' => new MongoId($_id)), 
+					array('$push' => array('likes.' . $vote_type . '_votes' => $username)));
+			
+				$this->mongo->test_app->users->update(array('username' => $username),
+					array('$push' => array('image_votes' => $vote_type.'_'.$_id),
+					'date_modified' => new MongoDate()));
+			}
+			else
+			{
+				echo 'dupe';
+			}
 		}
 		else
 		{
-			echo 'You must be logged in to vote';
+			echo 'login';
 		}
 	}
 		

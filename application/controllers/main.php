@@ -24,12 +24,36 @@ class Main extends CI_Controller {
 		{
 			// Get the next result
 			$documents = $users->getNext();
+			
+			//Checking to see if the user has already voted up on a particular post
+			if(in_array($this->session->userdata('username'), $documents->file['likes']['up_votes']))
+			{
+				$already_voted_up = true;
+			}
+			else
+			{
+				$already_voted_up = false;
+			}
+			
+			//Checking to see if the user has already voted down on a particular post
+			if(in_array($this->session->userdata('username'), $documents->file['likes']['down_votes']))
+			{
+				$already_voted_down = true;
+			}
+			else
+			{
+				$already_voted_down = false;
+			}
+			
+			//Sending variables to the view
 			$data['documents'][] = array(
 				'_id' => $documents->file['_id'],
+				'already_voted_up' => $already_voted_up,
+				'already_voted_down' => $already_voted_down,
 				'up_votes' => count($documents->file['likes']['up_votes']),
 				'down_votes' => count($documents->file['likes']['down_votes']),
 				'tags' => $documents->file['tags'],
-				'submitted_by' => $documents->file['submitted_by']
+				'submitted_by' => $documents->file['submitted_by'],
 				);
 		}
 		

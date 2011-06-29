@@ -5,22 +5,15 @@
 #sidebar{float:right;}
 img{max-width: 500px; max-height: 500px;}
 </style>
-<pre>
-	<?//var_dump($user_data['user'])?>
-	</pre>
 <div id="wrapper">
   <div id="image_content">
-	Images uploaded by user:
-    <?foreach ($user_data['user']['images_uploaded'] as $image):?>
-      <a href="<?=base_url()?>main/image/<?=$image?>">Link</a>
-		<?endforeach;?>
+	Single user page
   </div>
   <div id="comments">
-		<?var_dump($user_data['user']['images_uploaded'])?>
   </div>
   <div id="sidebar">
     <div class="single_content_submitted_by">
-      <p>Submitted by: </p>
+      <p>posts Submitted by user: </p>
     </div>
     <div class="single_content_tags">
       <p>Filed Under:</p>
