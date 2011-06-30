@@ -17,7 +17,7 @@ class Asset extends CI_Controller {
     if ($image)
     {
       $data = array(
-		  '_id' => $image->file['_id'],
+      '_id' => $image->file['_id'],
 	    'likes' => $image->file['likes'],
 	    'submitted_by' => $image->file['submitted_by'],
 	    'description' => $image->file['description'],

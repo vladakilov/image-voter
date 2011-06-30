@@ -40,7 +40,7 @@ class Upload extends CI_Controller {
 			$this->mongo->test_app->users->update(array('username' => $username),
 				array('$push' => array('images_uploaded' => $id)));
 		}
-		//redirect to user page to show recently uploaded image.
+		redirect(base_url(), 'refresh');
 	}
 	
 }

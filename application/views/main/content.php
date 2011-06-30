@@ -42,11 +42,6 @@ function submit_vote(vote_type, _id, current) {
 }
 </script>
 
-<style>
-.already_voted{color: #333;}
-
-</style>
-
 <?if($logged_in):?>
 <div id="top_nav">
   <p style="float:right;">Welcome <a href="user/<?=$username?>"><?=$username?></a> | <a href="upload">Upload</a> | <a href="ajax/logout">Logout</a></p>

@@ -35,7 +35,7 @@ class Ajax extends CI_Controller {
 				'logged_in' => TRUE
 				);
 			$this->session->set_userdata($session_data);
-	    redirect('/', 'refresh');
+			redirect('/', 'refresh');
 		}
 	}
 	
@@ -75,7 +75,7 @@ class Ajax extends CI_Controller {
 		}
 	}
 
-  // Ajax call made when user votes on image
+	// Ajax call made when user votes on image
 	public function vote()
 	{
 		if ($this->logged_in)

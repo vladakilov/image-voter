@@ -9,12 +9,11 @@ class User extends CI_Controller {
 		$this->mongo = new Mongo();
 	}
 
+  // User page
 	public function index($username)
 	{
-		$db = $this->mongo->images_test->getGridFS();
-		$image = $db->findOne(array('submitted_by' => $username));
-		$user = $this->mongo->test_app->users->find(array('username' => $username));
-		echo $user->count();
+		$image = $this->mongo->images_test->getGridFS()->findOne(array('submitted_by' => $username));
+		$user = $this->mongo->test_app->users->findOne(array('username' => $username));
 		if ($user)
 		{
 			$data['image_data'] = array('image' => $image);
@@ -26,6 +25,13 @@ class User extends CI_Controller {
 		{
 			echo 'Load 404 error';
 		}
+	}
+	
+	
+	// Get all items liked by user
+	public function liked()
+	{
+	
 	}
 	
 }

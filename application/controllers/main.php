@@ -57,18 +57,9 @@ class Main extends CI_Controller {
 				);
 		}
 		
-		$logged_in = $this->session->userdata('logged_in');
-		if ($logged_in)
-		{
-			$this->load->view('main/header');
-			$this->load->view('main/content', $data);
-		}
-		else
-		{
 			$this->load->view('main/header');
 			$this->load->view('main/form');
 			$this->load->view('main/content', $data);
-		}
 	}
 
 	public function image($id)

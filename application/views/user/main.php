@@ -10,6 +10,11 @@ img{max-width: 500px; max-height: 500px;}
 	Single user page
   </div>
   <div id="comments">
+	<p>
+	<?foreach($user_data['user']['image_votes'] as $votes):?>
+	<?=$votes?></br>
+	<?endforeach;?>
+	</p>
   </div>
   <div id="sidebar">
     <div class="single_content_submitted_by">
