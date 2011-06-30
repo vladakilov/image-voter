@@ -16,6 +16,7 @@ class Ajax extends CI_Controller {
 		
 	}
 
+	// Ajax call to login user
 	public function login()
 	{
 		$username = trim($this->input->post('username'));
@@ -38,12 +39,14 @@ class Ajax extends CI_Controller {
 		}
 	}
 	
+	// Ajax call to logout current user
 	public function logout()
 	{
 		$this->session->sess_destroy(); // Destroy session
 		redirect('/', 'refresh');
 	}
 	
+	// Ajax call to register a new user to the app
 	public function register()
 	{
 		$username = trim($this->input->post('username'));
@@ -60,7 +63,7 @@ class Ajax extends CI_Controller {
 			$this->mongo->test_app->users->insert(array('username' => trim($username), 
 				'password' => md5($password),
 				'email' => $email,
-				//'image_votes' => array(),
+				'image_votes' => array(),
 				'images_uploaded' => array(), 
 				'created' => new MongoDate()
 				));
@@ -72,7 +75,7 @@ class Ajax extends CI_Controller {
 		}
 	}
 
-
+  // Ajax call made when user votes on image
 	public function vote()
 	{
 		if ($this->logged_in)
@@ -83,22 +86,45 @@ class Ajax extends CI_Controller {
 			
 			$gridfs = $this->mongo->images_test->getGridFS();
 			
-			$entry_exists = $gridfs->findOne(array('_id' => new MongoId($_id),
-				'likes.' . $vote_type . '_votes' => $username)); 
-			//var_dump($entry_exists);
-			if(!$entry_exists)
-			{
-				$gridfs->update(array('_id' => new MongoId($_id)), 
-					array('$push' => array('likes.' . $vote_type . '_votes' => $username)));
+			if($vote_type === 'up' or $vote_type === 'down'){
+				
+				$entry_exists = $gridfs->findOne(array('_id' => new MongoId($_id),
+					'likes.' . $vote_type . '_votes' => $username)); 
 			
-				$this->mongo->test_app->users->update(array('username' => $username),
-					array('$push' => array('image_votes' => $vote_type.'_'.$_id),
-					'date_modified' => new MongoDate()));
+				// If user didn't already vote on post
+				if(!$entry_exists)
+				{
+					// Update meta data in image collection that user just voted on
+					$gridfs->update(array('_id' => new MongoId($_id)), 
+						array('$push' => array('likes.' . $vote_type . '_votes' => $username)));
+				
+					// Update user collection that user just voted on image
+					$this->mongo->test_app->users->update(array('username' => $username),
+						array('$push' => array('image_votes' => $vote_type.'_'.$_id)));
+				
+					// Return 'vote' to js response
+					echo 'vote';
+				}
+				else
+				{
+					// Update meta data in image collection that user removed voted
+					$gridfs->update(array('_id' => new MongoId($_id)), 
+						array('$pop' => array('likes.' . $vote_type . '_votes' => $username)));
+						
+					// Update user collection that user removed vote
+					$this->mongo->test_app->users->update(array('username' => $username),
+						array('$pop' => array('image_votes' => $vote_type.'_'.$_id)));
+				
+					// Return 'remove_vote' to js response
+					echo 'remove_vote';
+				}
+				
 			}
 			else
 			{
-				echo 'dupe';
+				exit;
 			}
+			
 		}
 		else
 		{

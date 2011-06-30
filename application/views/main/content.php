@@ -17,20 +17,35 @@ function submit_vote(vote_type, _id, current) {
     },
     success: function (response) {
       switch (response) {
-      case 'dupe':
-        alert('You already voted!');
+      case 'vote':
+        if ($(current).attr('class') == 'down') {
+          $(current).css("color", "red");
+        } else {
+          $(current).css("color", "green");
+        }
+        $(current).siblings().after('<p class="count">' + (parseInt(current.siblings().text()) + 1) + '</p>').remove();
+        break;
+      case 'remove_vote':
+        $(current).siblings().after('<p class="count">' + (parseInt(current.siblings().text()) - 1) + '</p>').remove();
+        $(current).css("color", "black");
         break;
       case 'login':
         alert('You need to login to vote.');
         break;
       default:
-        $(current).siblings().after('<p class="count">' + (parseInt(current.siblings().text()) + 1) + '</p>').remove();
-        $(current).remove();
+        //$(current).siblings().after('<p class="count">' + (parseInt(current.siblings().text()) + 1) + '</p>').remove();
+        //$(current).remove();
+        //$(current).addClass(".already_voted");
       }
     }
   });
 }
 </script>
+
+<style>
+.already_voted{color: #333;}
+
+</style>
 
 <?if($logged_in):?>
 <div id="top_nav">
@@ -44,17 +59,19 @@ function submit_vote(vote_type, _id, current) {
   <tr>
     <td>
       <?if($document['already_voted_up']):?>
+      <a href="javascript:;" class="up" id="<?=$document['_id']?>" style="color:green">Up Vote</a>
       <p class="count"><?=$document['up_votes']?></p>
       <?else:?>
-      <a href="javascript:;" class="up" id="<?=$document['_id']?>">Up Vote</a>
+      <a href="javascript:;" class="up" id="<?=$document['_id']?>" style="color:black">Up Vote</a>
       <p class="count"><?=$document['up_votes']?></p>
       <?endif;?>
     </td>
     <td>
       <?if($document['already_voted_down']):?>
+      <a href="javascript:;" class="down" id="<?=$document['_id']?>" style="color:red">Down Vote</a>
       <p class="count"><?=$document['down_votes']?></p>
       <?else:?>
-      <a href="javascript:;" class="down" id="<?=$document['_id']?>">Down Vote</a>
+      <a href="javascript:;" class="down" id="<?=$document['_id']?>" style="color:black">Down Vote</a>
       <p class="count"><?=$document['down_votes']?></p>
       <?endif;?>
     </td>
