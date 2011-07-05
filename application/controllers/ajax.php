@@ -88,6 +88,8 @@ class Ajax extends CI_Controller {
 			
 			if($vote_type === 'up' or $vote_type === 'down'){
 				
+				$opposite_vote = ($vote_type === 'up') ? 'down' : 'up';
+				
 				$entry_exists = $gridfs->findOne(array('_id' => new MongoId($_id),
 					'likes.' . $vote_type . '_votes' => $username)); 
 			
@@ -101,7 +103,14 @@ class Ajax extends CI_Controller {
 					// Update user collection that user just voted on image
 					$this->mongo->test_app->users->update(array('username' => $username),
 						array('$push' => array('image_votes' => $vote_type.'_'.$_id)));
-				
+						
+					$gridfs->update(array('_id' => new MongoId($_id)), 
+						array('$pop' => array('likes.' . $opposite_vote . '_votes' => $username)));
+						
+					// Update user collection that user removed vote
+					$this->mongo->test_app->users->update(array('username' => $username),
+						array('$pop' => array('image_votes' => $opposite_vote.'_'.$_id)));
+				  
 					// Return 'vote' to js response
 					echo 'vote';
 				}

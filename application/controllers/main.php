@@ -45,15 +45,17 @@ class Main extends CI_Controller {
 				$already_voted_down = false;
 			}
 			
+			$already_voted = ($already_voted_up or $already_voted_down) ? true : false;
 			//Sending variables to the view
 			$data['documents'][] = array(
 				'_id' => $documents->file['_id'],
+				'already_voted' => $already_voted,
 				'already_voted_up' => $already_voted_up,
 				'already_voted_down' => $already_voted_down,
 				'up_votes' => count($documents->file['likes']['up_votes']),
 				'down_votes' => count($documents->file['likes']['down_votes']),
 				'tags' => $documents->file['tags'],
-				'submitted_by' => $documents->file['submitted_by'],
+				'submitted_by' => $documents->file['submitted_by']
 				);
 		}
 		
@@ -69,12 +71,12 @@ class Main extends CI_Controller {
 		$photo = array('photo' => $image);
 		$this->load->view('main/photo', $photo);
 	}
-	
+	// Doesn't really work yet
 	public function login()
 	{
 		$this->load->view('main/login');
 	}
-	
+	//works but is now implemented in ajax controller
 	public function logout()
 	{
 		$this->session->sess_destroy(); // Destroy session

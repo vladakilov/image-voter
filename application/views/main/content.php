@@ -2,7 +2,7 @@
 $(document).ready(function () {
   // Make a vote
   $(".up, .down").click(function () {
-    submit_vote($(this).attr('class'), $(this).attr('id'), $(this));
+    submit_vote($(this).attr('class').split(' ')[0], $(this).attr('id').split(' ')[0], $(this));
   });
 });
 
@@ -16,31 +16,36 @@ function submit_vote(vote_type, _id, current) {
       'vote_type': vote_type
     },
     success: function (response) {
+      var remove = $(current).attr('class').split(' ')[1];
       switch (response) {
       case 'vote':
-        if ($(current).attr('class') == 'down') {
-          $(current).css("color", "red");
+        if ($(current).attr('class').split(' ')[0] == 'down') {
+          $(current).removeClass(remove).addClass("down_vote");
         } else {
-          $(current).css("color", "green");
+          $(current).removeClass(remove).addClass("up_vote");
         }
         $(current).siblings().after('<p class="count">' + (parseInt(current.siblings().text()) + 1) + '</p>').remove();
         break;
       case 'remove_vote':
         $(current).siblings().after('<p class="count">' + (parseInt(current.siblings().text()) - 1) + '</p>').remove();
-        $(current).css("color", "black");
+        $(current).removeClass(remove).addClass("no_vote");
         break;
       case 'login':
         alert('You need to login to vote.');
         break;
       default:
-        //$(current).siblings().after('<p class="count">' + (parseInt(current.siblings().text()) + 1) + '</p>').remove();
-        //$(current).remove();
-        //$(current).addClass(".already_voted");
+        // Do something when response != login, remove_vote, or vote.
       }
     }
   });
 }
 </script>
+
+<style>
+.down_vote{color:red;}
+.up_vote{color:green;}
+.no_vote{color:black;}
+</style>
 
 <?if($logged_in):?>
 <div id="top_nav">
@@ -54,19 +59,19 @@ function submit_vote(vote_type, _id, current) {
   <tr>
     <td>
       <?if($document['already_voted_up']):?>
-      <a href="javascript:;" class="up" id="<?=$document['_id']?>" style="color:green">Up Vote</a>
+      <a href="javascript:;" class="up up_vote" id="<?=$document['_id']?>">Up Vote</a>
       <p class="count"><?=$document['up_votes']?></p>
       <?else:?>
-      <a href="javascript:;" class="up" id="<?=$document['_id']?>" style="color:black">Up Vote</a>
+      <a href="javascript:;" class="up no_vote" id="<?=$document['_id']?>">Up Vote</a>
       <p class="count"><?=$document['up_votes']?></p>
       <?endif;?>
     </td>
-    <td>
+    <td class="remove">
       <?if($document['already_voted_down']):?>
-      <a href="javascript:;" class="down" id="<?=$document['_id']?>" style="color:red">Down Vote</a>
+      <a href="javascript:;" class="down down_vote" id="<?=$document['_id']?>">Down Vote</a>
       <p class="count"><?=$document['down_votes']?></p>
       <?else:?>
-      <a href="javascript:;" class="down" id="<?=$document['_id']?>" style="color:black">Down Vote</a>
+      <a href="javascript:;" class="down no_vote" id="<?=$document['_id']?>">Down Vote</a>
       <p class="count"><?=$document['down_votes']?></p>
       <?endif;?>
     </td>
