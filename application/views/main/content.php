@@ -17,10 +17,16 @@ function submit_vote(vote_type, _id, current) {
     },
     success: function (response) {
       var remove = $(current).attr('class').split(' ')[1];
+      var current_class = $(current).attr('class').split(' ')[0];
       switch (response) {
       case 'vote':
-        if ($(current).attr('class').split(' ')[0] == 'down') {
+        if (current_class == 'down') {
           $(current).removeClass(remove).addClass("down_vote");
+          $('.up4e0cbc71529e2d76290d0000')
+          .siblings()
+          .after('<p class="count">' + (parseInt($('.up4e0cbc71529e2d76290d0000').siblings().text()) - 1) + '</p>')
+          .remove();
+          $('.up4e0cbc71529e2d76290d0000').removeClass('up4e0cbc71529e2d76290d0000');
         } else {
           $(current).removeClass(remove).addClass("up_vote");
         }
@@ -59,7 +65,7 @@ function submit_vote(vote_type, _id, current) {
   <tr>
     <td>
       <?if($document['already_voted_up']):?>
-      <a href="javascript:;" class="up up_vote" id="<?=$document['_id']?>">Up Vote</a>
+      <a href="javascript:;" class="up up_vote up<?=$document['_id']?>" id="<?=$document['_id']?>">Up Vote</a>
       <p class="count"><?=$document['up_votes']?></p>
       <?else:?>
       <a href="javascript:;" class="up no_vote" id="<?=$document['_id']?>">Up Vote</a>
