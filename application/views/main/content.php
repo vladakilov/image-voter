@@ -18,6 +18,9 @@ function submit_vote(vote_type, _id, current) {
     success: function (response) {
       var remove = $(current).attr('class').split(' ')[1];
       var current_class = $(current).attr('class').split(' ')[0];
+      //var temp = $(current).attr('class');
+      //alert(temp.next());
+
       switch (response) {
       case 'vote':
         if (current_class == 'down') {
@@ -53,11 +56,14 @@ function submit_vote(vote_type, _id, current) {
 .no_vote{color:black;}
 </style>
 
-<?if($logged_in):?>
 <div id="top_nav">
+  <?if($logged_in):?>
   <p style="float:right;">Welcome <a href="user/<?=$username?>"><?=$username?></a> | <a href="upload">Upload</a> | <a href="ajax/logout">Logout</a></p>
+  <?else:?>
+  <a id="triggers" href="#" rel="#login"/>Login</a>
+  <a id="triggers" href="#" rel="#register"/>Register</a>
+  <?endif;?>
 </div>
-<?endif;?>
 
 <!-- The loop to show all assets -->
 <table>
@@ -74,7 +80,7 @@ function submit_vote(vote_type, _id, current) {
     </td>
     <td class="remove">
       <?if($document['already_voted_down']):?>
-      <a href="javascript:;" class="down down_vote" id="<?=$document['_id']?>">Down Vote</a>
+      <a href="javascript:;" class="down down_vote down<?=$document['_id']?>" id="<?=$document['_id']?>">Down Vote</a>
       <p class="count"><?=$document['down_votes']?></p>
       <?else:?>
       <a href="javascript:;" class="down no_vote" id="<?=$document['_id']?>">Down Vote</a>

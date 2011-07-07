@@ -45,11 +45,9 @@ class Main extends CI_Controller {
 				$already_voted_down = false;
 			}
 			
-			$already_voted = ($already_voted_up or $already_voted_down) ? true : false;
 			//Sending variables to the view
 			$data['documents'][] = array(
 				'_id' => $documents->file['_id'],
-				'already_voted' => $already_voted,
 				'already_voted_up' => $already_voted_up,
 				'already_voted_down' => $already_voted_down,
 				'up_votes' => count($documents->file['likes']['up_votes']),
@@ -59,23 +57,27 @@ class Main extends CI_Controller {
 				);
 		}
 		
-			$this->load->view('main/header');
-			$this->load->view('main/form');
+			$this->load->view('default/header');
+			$this->load->view('default/form');
 			$this->load->view('main/content', $data);
+			$this->load->view('default/footer');
 	}
 
 	public function image($id)
 	{
 		$db = $this->mongo->images_test->getGridFS();
 		$image = $db->findOne(array('_id' => new MongoId($id)));
-		$photo = array('photo' => $image);
-		$this->load->view('main/photo', $photo);
+		// Stream image to browser
+		header('Content-type: image/jpeg');
+		echo $image->getBytes();
 	}
+	
 	// Doesn't really work yet
 	public function login()
 	{
 		$this->load->view('main/login');
 	}
+	
 	//works but is now implemented in ajax controller
 	public function logout()
 	{

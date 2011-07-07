@@ -5,6 +5,14 @@
 #sidebar{float:right;}
 img{max-width: 500px; max-height: 500px;}
 </style>
+<div id="top_nav">
+  <?if($logged_in):?>
+  <p style="float:right;">Welcome <a href="<?=base_url();?>user/<?=$username?>"><?=$username?></a> | <a href="<?=base_url();?>upload">Upload</a> | <a href="<?=base_url();?>ajax/logout">Logout</a></p>
+  <?else:?>
+  <a id="triggers" href="#" rel="#login"/>Login</a>
+  <a id="triggers" href="#" rel="#register"/>Register</a>
+  <?endif;?>
+</div>
 <div id="wrapper">
   <div id="image_content">
     <img src="<?=base_url()?>main/image/<?=$_id?>">

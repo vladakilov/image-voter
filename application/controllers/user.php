@@ -18,7 +18,6 @@ class User extends CI_Controller {
 		{
 			$data['image_data'] = array('image' => $image);
 			$data['user_data'] = array('user' => $user);
-			
 			$this->load->view('user/main', $data);
 		}
 		else

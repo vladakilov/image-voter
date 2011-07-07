@@ -22,8 +22,12 @@ class Asset extends CI_Controller {
 	    'submitted_by' => $image->file['submitted_by'],
 	    'description' => $image->file['description'],
 	    'tags' => $image->file['tags'],
-	    'uploadDate' => $image->file['uploadDate']
+	    'uploadDate' => $image->file['uploadDate'],
+			'username' => $this->session->userdata('username'),
+			'logged_in' => $this->session->userdata('logged_in')
 		  );
+		$this->load->view('default/header');
+		$this->load->view('default/form');
 		$this->load->view('asset/index', $data);
 	  }
     else

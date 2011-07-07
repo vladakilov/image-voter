@@ -1,8 +1,10 @@
 <script>
+var base_url = '<?=base_url()?>';
+
 function submit_login_form() {
   $.ajax({
     type: "POST",
-    url: "ajax/login",
+    url: base_url+"ajax/login",
     data: {
       'username': $("#username_login").val(),
       'password': $("#password_login").val()
@@ -22,7 +24,7 @@ function submit_login_form() {
 function submit_register_form() {
   $.ajax({
     type: "POST",
-    url: "ajax/register",
+    url: base_url+"ajax/register",
     data: {
       'username': $("#username").val(),
       'email': $("#email").val(),
@@ -74,15 +76,12 @@ function validate_login_form() {
   submit_login_form();
 }
 
-function refresh_page()
-{
-	window.location.reload(true);
+function refresh_page() {
+  window.location.reload(true);
 }
 
-
-function logout()
-{
-	$.post("CodeIgniter/ajax/logout/",function(){refresh_page();});
+function logout() {
+  $.post(base_url+"ajax/logout/",function(){refresh_page();});
 }
 </script>
 
@@ -145,6 +144,3 @@ function logout()
   </div>
 </div>
 <!-- End Begin Login Form -->
-
-<a id="triggers" href="#" rel="#login"/>Login</a>
-<a id="triggers" href="#" rel="#register"/>Register</a>
