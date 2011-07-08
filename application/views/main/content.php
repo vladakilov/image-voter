@@ -54,15 +54,21 @@ function submit_vote(vote_type, _id, current) {
 .down_vote{color:red;}
 .up_vote{color:green;}
 .no_vote{color:black;}
+
+
 </style>
 
+<div id="wrapper">
+
 <div id="top_nav">
+  <p style="float:right;">
   <?if($logged_in):?>
-  <p style="float:right;">Welcome <a href="user/<?=$username?>"><?=$username?></a> | <a href="upload">Upload</a> | <a href="ajax/logout">Logout</a></p>
+  Welcome <a href="<?=base_url();?>user/<?=$username?>"><?=$username?></a> | <a href="<?=base_url();?>upload">Upload</a> | <a href="<?=base_url();?>ajax/logout">Logout</a>
   <?else:?>
   <a id="triggers" href="#" rel="#login"/>Login</a>
   <a id="triggers" href="#" rel="#register"/>Register</a>
   <?endif;?>
+  </p>
 </div>
 
 <!-- The loop to show all assets -->
@@ -105,3 +111,4 @@ function submit_vote(vote_type, _id, current) {
   <?endforeach;?>
 </table>
 <!-- End loop -->
+</div>

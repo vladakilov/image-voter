@@ -53,14 +53,36 @@
 	padding: 16px;
 	width: 250px;
 }
-textarea{
-border: 1px solid gray;
-margin: 0;
-padding: 3px;
-width: 500px;}
+
+
+
+
 body {
   font-family: 'Lucida Grande', Verdana, Arial, sans-serif;
 }
+
+#wrapper {
+	margin: 0 auto;
+	width: 1024px;
+	overflow: hidden;
+}
+
+#top_nav{
+	width: 1024px;
+	min-height: 100px;
+}
+
+
+
+textarea{
+	border: 1px solid gray;
+	margin: 0;
+	padding: 3px;
+	width: 500px;
+}
+	
+
+
 h1 a {
   text-decoration: none;
   color: #3b5998;

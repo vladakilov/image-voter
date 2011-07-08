@@ -29,6 +29,7 @@ class Asset extends CI_Controller {
 		$this->load->view('default/header');
 		$this->load->view('default/form');
 		$this->load->view('asset/index', $data);
+		$this->load->view('default/footer');
 	  }
     else
     {
