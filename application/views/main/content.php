@@ -18,26 +18,37 @@ function submit_vote(vote_type, _id, current) {
     success: function (response) {
       var remove = $(current).attr('class').split(' ')[1];
       var current_class = $(current).attr('class').split(' ')[0];
-      //var temp = $(current).attr('class');
-      //alert(temp.next());
+      var _id = $(current).attr('id').split(' ')[0];
 
+
+      if(current_class === 'up') {
+      var temp = $(current).parent().next('td');
+      remove_class = temp.children().attr('class').split(' ')[2];
+      }
+      if(current_class === 'down') {
+	  var temp = $(current).parent().prev('td');
+	  remove_class = temp.children().attr('class').split(' ')[2];
+      }
+      //alert(remove_class);
+      
       switch (response) {
       case 'vote':
         if (current_class == 'down') {
-          $(current).removeClass(remove).addClass("down_vote");
-          $('.up4e0cbc71529e2d76290d0000')
-          .siblings()
-          .after('<p class="count">' + (parseInt($('.up4e0cbc71529e2d76290d0000').siblings().text()) - 1) + '</p>')
-          .remove();
-          $('.up4e0cbc71529e2d76290d0000').removeClass('up4e0cbc71529e2d76290d0000');
+          $(current).removeClass(remove).addClass("down_vote down" + _id );
+          $('.'+remove_class).siblings().after('<p class="count">' + (parseInt($('.'+remove_class).siblings().text()) - 1) + '</p>').remove();
+          $('.'+remove_class).removeClass().addClass('up no_vote');
         } else {
-          $(current).removeClass(remove).addClass("up_vote");
+          $(current).removeClass(remove).addClass("up_vote up" + _id );
+          $('.'+remove_class).siblings().after('<p class="count">' + (parseInt($('.'+remove_class).siblings().text()) - 1) + '</p>').remove();
+          $('.'+remove_class).removeClass().addClass('down no_vote');
         }
         $(current).siblings().after('<p class="count">' + (parseInt(current.siblings().text()) + 1) + '</p>').remove();
+        //$(current).removeClass().addClass(current_class+'_vote');
         break;
       case 'remove_vote':
         $(current).siblings().after('<p class="count">' + (parseInt(current.siblings().text()) - 1) + '</p>').remove();
-        $(current).removeClass(remove).addClass("no_vote");
+        //$('.'+remove_class).removeClass(remove_class).addClass("no_vote");
+        $(current).removeClass().addClass(current_class + " no_vote");
         break;
       case 'login':
         alert('You need to login to vote.');
@@ -48,6 +59,7 @@ function submit_vote(vote_type, _id, current) {
     }
   });
 }
+
 </script>
 
 <style>
@@ -84,7 +96,7 @@ function submit_vote(vote_type, _id, current) {
       <p class="count"><?=$document['up_votes']?></p>
       <?endif;?>
     </td>
-    <td class="remove">
+    <td>
       <?if($document['already_voted_down']):?>
       <a href="javascript:;" class="down down_vote down<?=$document['_id']?>" id="<?=$document['_id']?>">Down Vote</a>
       <p class="count"><?=$document['down_votes']?></p>

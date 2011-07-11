@@ -9,16 +9,27 @@ class User extends CI_Controller {
 		$this->mongo = new Mongo();
 	}
 
-  // User page
+	// User page
 	public function index($username)
 	{
-		$image = $this->mongo->images_test->getGridFS()->findOne(array('submitted_by' => $username));
-		$user = $this->mongo->test_app->users->findOne(array('username' => $username));
-		if ($user)
+		$username = (isset($username))?$username:null;
+		$image_data = $this->mongo->images_test->getGridFS()->findOne(array('submitted_by' => $username));
+		$user_data = $this->mongo->test_app->users->findOne(array('username' => $username));
+		$logged_in = $this->session->userdata('logged_in');
+		$username = $this->session->userdata('username');
+		if ($user_data)
 		{
-			$data['image_data'] = array('image' => $image);
-			$data['user_data'] = array('user' => $user);
+			$data = array(
+				'image_data' => array($image_data),
+				'user_data' => array($user_data),
+				'username' => $username,
+				'logged_in' => $logged_in
+			);
+			
+			$this->load->view('default/header');
 			$this->load->view('user/main', $data);
+			$this->load->view('default/footer');
+			
 		}
 		else
 		{

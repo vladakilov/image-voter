@@ -102,7 +102,7 @@ class Ajax extends CI_Controller {
 				
 					// Update user collection that user just voted on image
 					$this->mongo->test_app->users->update(array('username' => $username),
-						array('$push' => array('image_votes' => $vote_type.'_'.$_id)));
+						array('$push' => array('image_votes' => array('up' => $_id))));
 						
 					$gridfs->update(array('_id' => new MongoId($_id)), 
 						array('$pop' => array('likes.' . $opposite_vote . '_votes' => $username)));

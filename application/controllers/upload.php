@@ -14,8 +14,13 @@ class Upload extends CI_Controller {
 		$logged_in = $this->session->userdata('logged_in');
 		if ($logged_in)
 		{
-			$data = array('username' => $this->session->userdata('username'));
+			$data = array('username' => $this->session->userdata('username'),
+			'logged_in' => $logged_in);
+			
+			$this->load->view('default/header');
 			$this->load->view('upload/asset', $data);
+			$this->load->view('default/footer');
+			
 		}
 		else
 		{
