@@ -2,39 +2,41 @@
 
 class Asset extends CI_Controller {
 
-	var $mongo;
+  var $mongo;
 
-  function __construct() {
+  function __construct()
+  {
     parent::__construct();  
     $this->mongo = new Mongo();
   }
 
-	public function index($id)
-	{
+  public function index($id)
+  {
     $db = $this->mongo->images_test->getGridFS();
-  	$image = $db->findOne(array('_id' => new MongoId($id)));
+    $image = $db->findOne(array('_id' => new MongoId($id)));
 
     if ($image)
     {
       $data = array(
-      '_id' => $image->file['_id'],
-	    'likes' => $image->file['likes'],
-	    'submitted_by' => $image->file['submitted_by'],
-	    'description' => $image->file['description'],
-	    'tags' => $image->file['tags'],
-	    'uploadDate' => $image->file['uploadDate'],
-			'username' => $this->session->userdata('username'),
-			'logged_in' => $this->session->userdata('logged_in')
-		  );
-		$this->load->view('default/header');
-		$this->load->view('default/form');
-		$this->load->view('asset/index', $data);
-		$this->load->view('default/footer');
-	  }
+        '_id' => $image->file['_id'],
+        'likes' => $image->file['likes'],
+        'submitted_by' => $image->file['submitted_by'],
+        'description' => $image->file['description'],
+        'tags' => $image->file['tags'],
+        'uploadDate' => $image->file['uploadDate'],
+        'username' => $this->session->userdata('username'),
+        'logged_in' => $this->session->userdata('logged_in')
+        );
+
+        $this->load->view('default/header');
+        $this->load->view('default/form');
+        $this->load->view('asset/index', $data);
+        $this->load->view('default/footer');
+      }
     else
     {
       echo 'Load 404 error';
     }
-
-	}
+  }
+  
 }
