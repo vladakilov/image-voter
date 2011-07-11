@@ -10,13 +10,13 @@ class User extends CI_Controller {
   }
 
   /**
-	 * Single user page get general info about user
-	 * Returns an array to the view with user_data and image_data
+   * Single user page get general info about user
+   * Returns an array to the view with user_data and image_data
    *
    * @param string $username
    *
-	 * @return array $data
-	 */
+   * @return array $data
+   */
   public function index($username)
   {
     $username = (isset($username))?$username:null;
@@ -46,13 +46,13 @@ class User extends CI_Controller {
   
   
   /**
-	 * Get all items 'liked' by user
-	 * Returns an array to the view with content
+   * Get all items 'liked' by user
+   * Returns an array to the view with content
    *
    * @param string $username
    *
-	 * @return array $data
-	 */
+   * @return array $data
+   */
   public function liked()
   {
   

@@ -49,7 +49,7 @@ class Ajax extends CI_Controller {
     // Ajax call to register a new user to the app
     public function register()
     {
-        $username = trim($this->input->post('username'));
+        $username = trim($this->input->post('username')); // this needs work gotta get rid of spaces and xss attacks
         $password = $this->input->post('password');
         $email = $this->input->post('email');
         
@@ -76,12 +76,12 @@ class Ajax extends CI_Controller {
         }
     }
     
-		/**
-		 * This function is called when a user has voting on a particular post.
-		 * It returns a string to the ajax response
+    /**
+     * This function is called when a user has voting on a particular post.
+     * It returns a string to the ajax response
      *
-		 * @return string
-		 */
+     * @return string
+     */
     public function vote()
     {
         if ($this->logged_in)
@@ -103,19 +103,15 @@ class Ajax extends CI_Controller {
                 // If user didn't already vote on post
                 if(!$entry_exists)
                 {
-                    // Add meta data in image collection that user just voted
+                    // Add meta data in image & users collection  that user just voted
                     $gridfs->update(array('_id' => new MongoId($_id)), 
                         array('$push' => array('likes.' . $vote_type . '_votes' => $username)));
-                
-                    // Add meta data to user collection that user just voted on image
                     $this->mongo->test_app->users->update(array('username' => $username),
                         array('$push' => array('image_votes' => array('up' => $_id))));
                     
-                    // Remove meta data in image collection that user removed voted    
+                    // Remove meta data in image & users collection that user removed voted    
                     $gridfs->update(array('_id' => new MongoId($_id)), 
-                        array('$pop' => array('likes.' . $opposite_vote . '_votes' => $username)));
-                        
-                    // Remove meta data in user collection that user removed voted
+                        array('$pop' => array('likes.' . $opposite_vote . '_votes' => $username))); 
                     $this->mongo->test_app->users->update(array('username' => $username),
                         array('$pop' => array('image_votes' => $opposite_vote.'_'.$_id)));
                   
@@ -124,11 +120,9 @@ class Ajax extends CI_Controller {
                 }
                 else
                 {
-                    // Update meta data in image collection that user removed voted
+                    // Update meta data in image & users collection that user removed voted
                     $gridfs->update(array('_id' => new MongoId($_id)), 
                         array('$pop' => array('likes.' . $vote_type . '_votes' => $username)));
-                        
-                    // Update user collection that user removed vote
                     $this->mongo->test_app->users->update(array('username' => $username),
                         array('$pop' => array('image_votes' => $vote_type.'_'.$_id)));
                 

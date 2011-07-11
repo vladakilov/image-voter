@@ -43,6 +43,7 @@ function submit_register_form() {
   });
 }
 
+
 function validate_register_form() {
   var email = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
   if ($('#username').val() == '') {
@@ -98,11 +99,11 @@ function logout() {
       </p>
       <p>
         <label for="password">Password</label>
-        <input type="text" name="password" id="password" size="30" maxlength="30" tabindex="3"/>
+        <input type="password" name="password" id="password" size="30" maxlength="30" tabindex="3"/>
       </p>
       <p>
         <label for="password2">Repeat Password</label>
-        <input type="text" name="password2" id="password2" size="30" maxlength="30" tabindex="4"/>
+        <input type="password" name="password2" id="password2" size="30" maxlength="30" tabindex="4"/>
       </p>
       <p>
         <input type="checkbox" id="terms" name="terms" value="yes" /> I agree with the Terms &amp; Conditions</br>
@@ -127,7 +128,7 @@ function logout() {
     </p>
     <p>
       <label for="password">Password</label>
-      <input type="text" name="password" id="password_login" size="30" maxlength="30" tabindex="3"/>
+      <input type="password" name="password" id="password_login" size="30" maxlength="30" tabindex="3"/>
     </p>
     <p>
       <input type="submit" id="login_dialog" value="Login" alt="Login" name="login" onClick="validate_login_form(); return false;"/>
