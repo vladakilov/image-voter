@@ -19,31 +19,15 @@ class Main extends CI_Controller {
       'logged_in' => $this->session->userdata('logged_in')
       );
     
-    // While we have results
+    //While we have results
     while($users->hasNext())
     {
-      // Get the next result
+      //Get the next result
       $documents = $users->getNext();
       
-      //Checking to see if the user has already voted up on a particular post
-      if(in_array($this->session->userdata('username'), $documents->file['likes']['up_votes']))
-      {
-        $already_voted_up = true;
-      }
-      else
-      {
-        $already_voted_up = false;
-      }
-      
-      //Checking to see if the user has already voted down on a particular post
-      if(in_array($this->session->userdata('username'), $documents->file['likes']['down_votes']))
-      {
-        $already_voted_down = true;
-      }
-      else
-      {
-        $already_voted_down = false;
-      }
+      //Checking to see if the user has already voted up/down on a particular post
+      $already_voted_up = in_array($this->session->userdata('username'), $documents->file['likes']['up_votes'])?true:false;
+      $already_voted_down = in_array($this->session->userdata('username'), $documents->file['likes']['down_votes'])?true:false;
       
       //Sending variables to the view
       $data['documents'][] = array(

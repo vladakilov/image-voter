@@ -40,6 +40,10 @@
 
 $route['default_controller'] = "main";
 $route['404_override'] = '';
+$route['user/(:any)/liked'] = "user/liked/$1/";
+$route['user/(:any)/down'] = "user/down/$1/";
+
+
 $route['user/(:any)'] = "user/index/$1";
 $route['asset/(:any)'] = "asset/index/$1";
 $route['photo/(:any)'] = "main/image/$1";

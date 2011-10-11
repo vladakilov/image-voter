@@ -14,12 +14,20 @@ class Asset extends CI_Controller {
   {
     $db = $this->mongo->images_test->getGridFS();
     $image = $db->findOne(array('_id' => new MongoId($id)));
+    $logged_in  = $this->session->userdata('logged_in');
+
+    //Checking to see if the user has already voted up/down on a particular post
+    $already_voted_up = in_array($this->session->userdata('username'), $image->file['likes']['up_votes'])?true:false;
+    $already_voted_down = in_array($this->session->userdata('username'), $image->file['likes']['down_votes'])?true:false;
 
     if ($image)
     {
       $data = array(
         '_id' => $image->file['_id'],
-        'likes' => $image->file['likes'],
+        'up_votes' => count($image->file['likes']['up_votes']),
+        'down_votes' => count($image->file['likes']['down_votes']),
+        'already_voted_up' => $already_voted_up,
+        'already_voted_down' => $already_voted_down,
         'submitted_by' => $image->file['submitted_by'],
         'description' => $image->file['description'],
         'tags' => $image->file['tags'],

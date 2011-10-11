@@ -49,13 +49,27 @@ class User extends CI_Controller {
    * Get all items 'liked' by user
    * Returns an array to the view with content
    *
-   * @param string $username
+   * @param string $user
    *
    * @return array $data
    */
   public function liked()
   {
-  
+		$user = $this->uri->segment(2, 0);;
   }
+
+  /**
+   * Get all items 'disliked' by user
+   * Returns an array to the view with content
+   *
+   * @param string $user
+   *
+   * @return array $data
+   */
+  public function disliked()
+  {
+		$user = $this->uri->segment(2, 0);;
+  }
+
   
 }

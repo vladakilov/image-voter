@@ -26,6 +26,9 @@
 	width:35px;
 }
 
+input, label {width:225px;}
+#terms, #updates {width:20px;}
+
 /* Registration Popup Dialog */
 #register, #login
 {
